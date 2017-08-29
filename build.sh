@@ -7,7 +7,7 @@ CONTAINER_NAME=node-web-app-$TAG
 NODE_VERSION=${1:-8}
 
 # make a docker contatiner from node:$NODE_VERSION
-cat > Dockerfile <<-EOF
+cat > Dockerfile-${NODE_VERSION} <<-EOF
 FROM node:$NODE_VERSION
 # Create app directory
 WORKDIR /usr/src/app
@@ -21,7 +21,7 @@ COPY . .
 EXPOSE 8080
 CMD [ "npm", "start" ]
 EOF
-docker build -t dmitrievav/$IMAGE_NAME:$TAG-node-$NODE_VERSION .
+docker build -t dmitrievav/$IMAGE_NAME:$TAG-node-$NODE_VERSION -f Dockerfile-${NODE_VERSION} .
 
 # upload target artifacts to some registry
 #docker login -u $dockerhub_user -p $dockerhub_pass -e dm-alexey@ya.ru
