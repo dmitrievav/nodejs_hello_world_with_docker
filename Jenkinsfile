@@ -43,6 +43,7 @@ stage('staging deployment') {
     }
     node('swarm') {
         sh 'echo deploy to staging completed'
+        sh 'fail'
     }
 }
 
