@@ -53,8 +53,13 @@ stage('staging deployment') {
 
 stage('staging QA') {
     node('swarm') {
-        sh 'curl -i  192.168.44.108:8881'
-        sh 'curl -i  192.168.44.108:8882'
+        parallel node7: {
+                sh 'curl -i  192.168.44.108:8881'
+            },
+            node8: {
+                sh 'curl -i  192.168.44.108:8882'
+            }
+        sh 'for i in $(docker ps -a | grep node-web-app | awk "{print $1}"); do docker rm -f $i; done'
         sh 'echo QA staging completed'
     }
 }
