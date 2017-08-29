@@ -30,13 +30,13 @@ stage('test') {
         parallel node7: {
                 withDockerContainer("dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-7") {
                     sh 'hostname; pwd; ls -laFh; ps axwwf'
-                    sh 'curl -i 127.0.0.1:8080'
+                    sh 'cd /usr/src/app; npm start; curl -i 127.0.0.1:8080'
                 }
             },
             node8: {
                 withDockerContainer("dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-8") {
                     sh 'hostname; pwd; ls -laFh; ps axwwf'
-                    sh 'curl -i 127.0.0.1:8080'
+                    sh 'cd /usr/src/app; npm start; curl -i 127.0.0.1:8080'
                 }
             }
     }
