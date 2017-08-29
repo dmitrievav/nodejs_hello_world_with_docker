@@ -42,8 +42,9 @@ stage('staging deployment') {
         input(message: 'Would you like to deploy to staging?')
     }
     node('swarm') {
+        sh 'for i in $(docker ps -a | awk '/node-web-app/ {print $1}'); do docker rm -f $i; done'
         sh "docker run -d -p 8881:8080 --name node-web-app-${env.BUILD_NUMBER}-node-7 dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-7"
-        sh "docker run -d -p 8882:8080 --name node-web-app-${env.BUILD_NUMBER}-node-7 dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-7"
+        sh "docker run -d -p 8882:8080 --name node-web-app-${env.BUILD_NUMBER}-node-8 dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-8"
         sh 'sleep5'
         sh 'echo deploy to staging completed'
 
