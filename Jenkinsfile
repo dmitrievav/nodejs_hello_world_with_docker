@@ -28,7 +28,7 @@ stage('build') {
 stage('test') {
     node('swarm') {
         parallel node7: {
-                withDockerContainer("dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-7') {
+                withDockerContainer("dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-7") {
                     sh 'hostname; pwd; ls -laFh; ps axwwf'
                     sh 'curl -i 127.0.0.1:8080'
                 }
