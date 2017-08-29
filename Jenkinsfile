@@ -59,6 +59,7 @@ stage('staging QA') {
             node8: {
                 sh 'curl -i  192.168.44.108:8882'
             }
+        input(message: 'debug')
         sh 'for i in $(docker ps -a | grep node-web-app | awk "{print $1}"); do docker rm -f $i; done'
         sh 'echo QA staging completed'
     }
