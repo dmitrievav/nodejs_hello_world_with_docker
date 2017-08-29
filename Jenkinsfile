@@ -42,13 +42,18 @@ stage('staging deployment') {
         input(message: 'Would you like to deploy to staging?')
     }
     node('swarm') {
+        sh "docker run -d -p 8881:8080 --name node-web-app-${env.BUILD_NUMBER}-node-7 dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-7"
+        sh "docker run -d -p 8882:8080 --name node-web-app-${env.BUILD_NUMBER}-node-7 dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-7"
+        sh 'sleep5'
         sh 'echo deploy to staging completed'
-        sh 'fail'
+
     }
 }
 
 stage('staging QA') {
     node('swarm') {
+        sh 'curl -i  192.168.44.108:8881'
+        sh 'curl -i  192.168.44.108:8882'
         sh 'echo QA staging completed'
     }
 }
