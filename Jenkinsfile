@@ -28,15 +28,15 @@ stage('build') {
 stage('test') {
     node('swarm') {
         parallel node7: {
-                withDockerContainer('dmitrievav/node-web-app:$TAG-node-7') {
+                withDockerContainer('dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-7') {
                     sh 'hostname; pwd; ls -laFh; ps axwwf'
-                    sh 'curl 127.0.0.1:8080'
+                    sh 'curl -i 127.0.0.1:8080'
                 }
             },
             node8: {
-                withDockerContainer('dmitrievav/node-web-app:$TAG-node-8') {
+                withDockerContainer('dmitrievav/node-web-app:${env.BUILD_NUMBER}-node-8') {
                     sh 'hostname; pwd; ls -laFh; ps axwwf'
-                    sh 'curl 127.0.0.1:8080'
+                    sh 'curl -i 127.0.0.1:8080'
                 }
             }
     }
