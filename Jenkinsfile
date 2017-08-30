@@ -6,7 +6,12 @@ properties(
             $class: 'BuildDiscarderProperty',
             strategy: [$class: 'LogRotator', numToKeepStr: '10']
         ],
-        pipelineTriggers([cron('H*/10 * * * *')]),
+        pipelineTriggers(
+            [
+                [$class: 'GitHubPushTrigger'],
+                pollSCM('H/15 * * * *')
+            ]
+        )
     ]
 )
 
